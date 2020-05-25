@@ -1,5 +1,8 @@
 # auth-2020-1
 
+## Documentación
+[https://bluuweb.github.io/vue-udemy/08-auth-firebase/](https://bluuweb.github.io/vue-udemy/08-auth-firebase/)
+
 ## Project setup
 ```
 npm install
