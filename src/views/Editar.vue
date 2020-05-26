@@ -3,8 +3,8 @@
         <h1>Editar</h1>
         {{id}} - {{tarea}}
         <form @submit.prevent="editarTarea(tarea)">
-            <input type="text" v-model="tarea.nombre">
-            <button>Editar</button>
+            <input type="text" v-model="tarea.nombre" class="form-control">
+            <button class="btn btn-warning btn-block mt-2" :disabled='desactivar'>Editar</button>
         </form>
     </div>
 </template>
@@ -25,7 +25,10 @@ export default {
         ...mapActions(['getTarea', 'editarTarea'])
     },
     computed:{
-        ...mapState(['tarea'])
+        ...mapState(['tarea']),
+        desactivar(){
+            return this.tarea.nombre.trim() === ''
+        }
     }
 }
 </script>

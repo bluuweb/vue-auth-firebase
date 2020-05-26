@@ -2,15 +2,15 @@
     <div>
         <h1>Lista de Tareas</h1>
         <router-link to='/agregar'>
-            <button>Agregar</button>
+            <button class="btn btn-primary">Agregar</button>
         </router-link>
-        <ul>
-            <li v-for="(item, index) in tareas" :key="index">
+        <ul class="list-group mt-3">
+            <li v-for="(item, index) in tareas" :key="index" class="list-group-item">
                 {{item.id}} - {{item.nombre}}
-                <router-link :to="{name: 'Editar', params: {id: item.id}}">
-                    <button>Editar</button>
+                <router-link :to="{name: 'Editar', params: {id: item.id}}" class="float-right">
+                    <button class="btn btn-warning">Editar</button>
                 </router-link>
-                <button @click="eliminarTarea(item.id)">Eliminar</button>
+                <button @click="eliminarTarea(item.id)" class="float-right btn btn-danger mr-2">Eliminar</button>
             </li>
         </ul>
     </div>

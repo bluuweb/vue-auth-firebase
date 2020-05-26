@@ -6,13 +6,15 @@
                 type="email"
                 placeholder="Ingrese email"
                 v-model="email"
+                class="form-control mb-2"
             >
             <input 
                 type="password"
                 placeholder="Ingrese contraseña"
                 v-model="pass"
+                class="form-control mb-2"
             >
-            <button type="submit">Acceder</button>
+            <button type="submit" class="btn btn-primary btn-block" :disabled='!desactivar'>Acceder</button>
         </form>
         <p>{{error}}</p>
     </div>
@@ -35,7 +37,10 @@ export default {
         ...mapActions(['ingresoUsuario'])
     },
     computed:{
-        ...mapState(['error'])
+        ...mapState(['error']),
+        desactivar(){
+            return this.pass.trim() !== '' && this.email.trim() !== '' && this.pass.length > 5
+        }
     }
 }
 </script>

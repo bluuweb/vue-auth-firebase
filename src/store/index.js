@@ -33,51 +33,55 @@ export default new Vuex.Store({
   },
   actions: {
     eliminarTarea({commit, state}, id){
-        db.collection(state.usuario.email).doc(id).delete()
-        .then(() => {
-            commit('setEliminarTarea', id)
-        })
-        .catch(error => console.log(error))
+      db.collection(state.usuario.email).doc(id).delete()
+      .then(() => {
+          commit('setEliminarTarea', id)
+      })
+      .catch(error => console.log(error))
     },
     agregarTarea({commit, state}, nombreTarea){
-        db.collection(state.usuario.email).add({
-            nombre: nombreTarea
-        })
-        .then(doc => {
-            router.push({name: 'Inicio'})
-        })
-        .catch(error => console.log(error))
+      if(!nombreTarea.trim()){
+        console.log('tarea vacia')
+        return
+      }
+      db.collection(state.usuario.email).add({
+          nombre: nombreTarea
+      })
+      .then(doc => {
+          router.push({name: 'Inicio'})
+      })
+      .catch(error => console.log(error))
     },
     getTarea({commit, state}, id){
-        db.collection(state.usuario.email).doc(id).get()
-        .then(doc => {
-            let tarea = doc.data()
-            tarea.id = doc.id
-            commit('setTarea', tarea)
-        })
-        .catch(error => console.log(error))
+      db.collection(state.usuario.email).doc(id).get()
+      .then(doc => {
+          let tarea = doc.data()
+          tarea.id = doc.id
+          commit('setTarea', tarea)
+      })
+      .catch(error => console.log(error))
     },
     editarTarea({commit, state}, tarea){
-        db.collection(state.usuario.email).doc(tarea.id).update({
-            nombre: tarea.nombre
-        })
-        .then(() => {
-            router.push({name: 'Inicio'})
-        })
-        .catch(error => console.log(error))
+      db.collection(state.usuario.email).doc(tarea.id).update({
+          nombre: tarea.nombre
+      })
+      .then(() => {
+          router.push({name: 'Inicio'})
+      })
+      .catch(error => console.log(error))
     },
     getTareas({commit, state}){
-        const tareas = []
-        db.collection(state.usuario.email).get()
-        .then(res => {
-            res.forEach(doc => {
-                let tarea = doc.data()
-                tarea.id = doc.id
-                tareas.push(tarea)
-            })
-            commit('setTareas', tareas)
-        })
-        .catch(error => console.log(error))
+      const tareas = []
+      db.collection(state.usuario.email).get()
+      .then(res => {
+          res.forEach(doc => {
+              let tarea = doc.data()
+              tarea.id = doc.id
+              tareas.push(tarea)
+          })
+          commit('setTareas', tareas)
+      })
+      .catch(error => console.log(error))
     },
     crearUsuario({commit}, usuario){
       auth.createUserWithEmailAndPassword(usuario.email, usuario.password)
